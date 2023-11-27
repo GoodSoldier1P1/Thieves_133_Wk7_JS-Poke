@@ -27,4 +27,40 @@ const pokeDex = async (pokemon) => {
     return data
 }
 
-pokeDex('squirtle')
+// pokeDex('squirtle')
+
+
+const search = async () => {
+    const searchInput = document.getElementById('search')
+    console.log('Search Input: ', searchInput) // should print the html form in the log
+    const searchTerm = searchInput.value
+    console.log('Search Term: ', searchTerm)
+
+    if (!searchTerm) {
+        return
+    }
+
+    try {
+        const results = await pokeDex(searchTerm)
+        console.log("Search Results: ", results)
+        pokeDex(results)
+    } catch (error){
+        console.error('Cannot find this Pokemon', error)
+    }
+
+}
+
+search()
+
+const getPokedex = async (event) => {
+    if (event) {
+        event.preventDefault();
+    }
+
+    const pokeSearch = document.getElementById('search').value;
+    try {
+        await search(pokeSearch); // called pokedex first to insure working code. Have to call search for it to work
+    } catch (error) {
+        console.error('Error fetching Pokedex data:', error);
+    }
+};
